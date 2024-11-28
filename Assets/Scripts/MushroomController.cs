@@ -6,18 +6,23 @@ public class MushroomController : MonoBehaviour
 {
     public GameObject mushroom1;
     public GameObject mushroom2;
+    public GameObject mushroom3;
 
     private SerialPort sp;
 
     private bool isMushroom1AtPeak = false;
     private bool isMushroom2AtPeak = false;
+    private bool isMushroom3AtPeak = false;
     private bool isMushroom1Moving = false;
     private bool isMushroom2Moving = false;
+    private bool isMushroom3Moving = false;
 
     private Vector2 mushroom1PeakPosition = new Vector2(-3f, -0.5f);
     private Vector2 mushroom1StartPosition = new Vector2(-3f, -3.5f);
-    private Vector2 mushroom2PeakPosition = new Vector2(3f, -0.5f);
-    private Vector2 mushroom2StartPosition = new Vector2(3f, -3.5f);
+    private Vector2 mushroom2PeakPosition = new Vector2(0f, -0.5f);
+    private Vector2 mushroom2StartPosition = new Vector2(0f, -3.5f);
+    private Vector2 mushroom3PeakPosition = new Vector2(3f, -0.5f);
+    private Vector2 mushroom3StartPosition = new Vector2(3f, -3.5f);
 
     private float moveDuration = 1f;
 
@@ -29,6 +34,7 @@ public class MushroomController : MonoBehaviour
 
         mushroom1.transform.position = mushroom1StartPosition;
         mushroom2.transform.position = mushroom2StartPosition;
+        mushroom3.transform.position = mushroom3StartPosition;
 
         StartCoroutine(StaggeredInitialMovement());
     }
@@ -38,6 +44,8 @@ public class MushroomController : MonoBehaviour
         yield return StartCoroutine(MoveUpAndDown(mushroom1, mushroom1StartPosition, mushroom1PeakPosition));
         yield return new WaitForSeconds(0.5f);
         yield return StartCoroutine(MoveUpAndDown(mushroom2, mushroom2StartPosition, mushroom2PeakPosition));
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(MoveUpAndDown(mushroom3, mushroom3StartPosition, mushroom3PeakPosition));
     }
 
     void Update()
@@ -79,6 +87,22 @@ public class MushroomController : MonoBehaviour
                         }
                     }
                 }
+
+                // Mushroom 3 movement
+                if (command == 3)
+                {
+                    if (!isMushroom3Moving)
+                    {
+                        if (!isMushroom3AtPeak)
+                        {
+                            StartCoroutine(MoveUp(mushroom3, mushroom3StartPosition, mushroom3PeakPosition));
+                        }
+                        else
+                        {
+                            StartCoroutine(MoveDownAndUp(mushroom3, mushroom3PeakPosition, mushroom3StartPosition, mushroom3PeakPosition));
+                        }
+                    }
+                }
             }
             catch (System.Exception) {}
         }
@@ -87,16 +111,18 @@ public class MushroomController : MonoBehaviour
     private IEnumerator MoveUpAndDown(GameObject mushroom, Vector2 startPosition, Vector2 peakPosition)
     {
         Vector2 currentPosition = mushroom.transform.position;
-        yield return StartCoroutine(MoveSmoothly(mushroom, currentPosition, peakPosition, mushroom == mushroom1));
+        yield return StartCoroutine(MoveSmoothly(mushroom, currentPosition, peakPosition));
 
         if (mushroom == mushroom1) isMushroom1AtPeak = true;
         else if (mushroom == mushroom2) isMushroom2AtPeak = true;
+        else if (mushroom == mushroom3) isMushroom3AtPeak = true;
     }
 
-    private IEnumerator MoveSmoothly(GameObject mushroom, Vector2 from, Vector2 to, bool isMushroom1)
+    private IEnumerator MoveSmoothly(GameObject mushroom, Vector2 from, Vector2 to)
     {
-        if (isMushroom1) isMushroom1Moving = true;
-        else isMushroom2Moving = true;
+        if (mushroom == mushroom1) isMushroom1Moving = true;
+        else if (mushroom == mushroom2) isMushroom2Moving = true;
+        else isMushroom3Moving = true;
 
         float elapsed = 0f;
         while (elapsed < moveDuration)
@@ -108,27 +134,30 @@ public class MushroomController : MonoBehaviour
 
         mushroom.transform.position = to;
 
-        if (isMushroom1) isMushroom1Moving = false;
-        else isMushroom2Moving = false;
+        if (mushroom == mushroom1) isMushroom1Moving = false;
+        else if (mushroom == mushroom2) isMushroom2Moving = false;
+        else isMushroom3Moving = false;
     }
 
     private IEnumerator MoveDownAndUp(GameObject mushroom, Vector2 peakPosition, Vector2 startPosition, Vector2 finalPeakPosition)
     {
         Vector2 currentPosition = mushroom.transform.position;
-        yield return StartCoroutine(MoveSmoothly(mushroom, currentPosition, startPosition, mushroom == mushroom1));
-        yield return StartCoroutine(MoveSmoothly(mushroom, startPosition, finalPeakPosition, mushroom == mushroom1));
+        yield return StartCoroutine(MoveSmoothly(mushroom, currentPosition, startPosition));
+        yield return StartCoroutine(MoveSmoothly(mushroom, startPosition, finalPeakPosition));
 
         if (mushroom == mushroom1) isMushroom1AtPeak = true;
         else if (mushroom == mushroom2) isMushroom2AtPeak = true;
+        else if (mushroom == mushroom3) isMushroom3AtPeak = true;
     }
 
     private IEnumerator MoveUp(GameObject mushroom, Vector2 startPosition, Vector2 peakPosition)
     {
         Vector2 currentPosition = mushroom.transform.position;
-        yield return StartCoroutine(MoveSmoothly(mushroom, currentPosition, peakPosition, mushroom == mushroom1));
+        yield return StartCoroutine(MoveSmoothly(mushroom, currentPosition, peakPosition));
 
         if (mushroom == mushroom1) isMushroom1AtPeak = true;
         else if (mushroom == mushroom2) isMushroom2AtPeak = true;
+        else if (mushroom == mushroom3) isMushroom3AtPeak = true;
     }
 
     void OnApplicationQuit()
