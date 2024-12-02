@@ -59,6 +59,7 @@ public class MushroomController : MonoBehaviour
                 // Mushroom 1 movement
                 if (command == 1)
                 {
+                    ScoreManager.instance.AddPoint();
                     if (!isMushroom1Moving)
                     {
                         if (!isMushroom1AtPeak)
@@ -75,6 +76,7 @@ public class MushroomController : MonoBehaviour
                 // Mushroom 2 movement
                 if (command == 2)
                 {
+                    ScoreManager.instance.AddPoint();
                     if (!isMushroom2Moving)
                     {
                         if (!isMushroom2AtPeak)
@@ -91,6 +93,7 @@ public class MushroomController : MonoBehaviour
                 // Mushroom 3 movement
                 if (command == 3)
                 {
+                    ScoreManager.instance.AddPoint();
                     if (!isMushroom3Moving)
                     {
                         if (!isMushroom3AtPeak)
