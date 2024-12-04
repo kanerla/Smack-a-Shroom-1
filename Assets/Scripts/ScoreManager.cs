@@ -26,6 +26,12 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Points: " + score.ToString();
     }
 
+    public void ReducePoints()
+    {
+        score -= 3;
+        scoreText.text = "Points: " + score.ToString();
+    }
+
     private void Awake()
     {
         instance = this;
