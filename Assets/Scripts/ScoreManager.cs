@@ -22,13 +22,13 @@ public class ScoreManager : MonoBehaviour
 
     public void AddPoint()
     {
-        score += 1;
+        score += 10;
         scoreText.text = "Points: " + score.ToString();
     }
 
     public void ReducePoints()
     {
-        score -= 3;
+        score -= 5;
         scoreText.text = "Points: " + score.ToString();
     }
 

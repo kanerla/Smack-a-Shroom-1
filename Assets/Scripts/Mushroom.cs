@@ -63,13 +63,13 @@ public class Mushroom : MonoBehaviour
     }
 
     public void Smashed()
-    { // TODO
+    {
         print ("smashed");
         if (hittable) {
             switch (mushroomType) {
             case MushroomType.Edible:
                 print ("edible");
-                ScoreManager.instance.AddPoint();
+                ScoreManager.instance.ReducePoints();
                 StopAllCoroutines();
                 StartCoroutine(QuickHide());
                 // Turn off hittable so that we can't keep tapping for score.
@@ -77,7 +77,7 @@ public class Mushroom : MonoBehaviour
                 break;
             case MushroomType.Poisonous:
                 print ("poisonous");
-                ScoreManager.instance.ReducePoints();
+                ScoreManager.instance.AddPoint();
                 StopAllCoroutines();
                 StartCoroutine(QuickHide());
                 // Turn off hittable so that we can't keep tapping for score.
