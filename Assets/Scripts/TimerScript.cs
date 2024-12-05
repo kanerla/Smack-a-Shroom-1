@@ -4,6 +4,7 @@ using TMPro;
 
 public class TimerScript : MonoBehaviour
 {
+    public static TimerScript instance;
     public float TimeLeft = 30;
     public bool TimerOn = false;
     public TextMeshProUGUI timerText;
@@ -38,5 +39,10 @@ public class TimerScript : MonoBehaviour
         float seconds = Mathf.FloorToInt(currentTime % 60);
 
         timerText.text = string.Format("{00}", seconds);
+    }
+
+    private void Awake()
+    {
+        instance = this;
     }
 }

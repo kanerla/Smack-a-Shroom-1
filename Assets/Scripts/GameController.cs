@@ -21,15 +21,18 @@ public class GameController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (currentMushrooms.Count < 1)
+        if (TimerScript.instance.TimerOn)
         {
-            int index = Random.Range(0, mushrooms.Count);
-            if (!currentMushrooms.Contains(mushrooms[index]))
+            if (currentMushrooms.Count < 1)
             {
-                currentMushrooms.Add(mushrooms[index]);
-                mushrooms[index].Activate();
+                int index = Random.Range(0, mushrooms.Count);
+                if (!currentMushrooms.Contains(mushrooms[index]))
+                {
+                    currentMushrooms.Add(mushrooms[index]);
+                    mushrooms[index].Activate();
+                }
+            
             }
-        
         }
     }
 
