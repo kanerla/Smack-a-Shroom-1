@@ -1,9 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Mushroom : MonoBehaviour
 {
-    // TODO: add sprites
+    public List<Sprite> edible;
+    public List<Sprite> poisonous;
 
     [SerializeField] private GameController controller;
 
@@ -92,12 +94,16 @@ public class Mushroom : MonoBehaviour
 
     private void CreateNext()
     {
-        int random = Random.Range(0, 10);
-        if (random < 5)
+        int randomType = Random.Range(0, 2);
+        if (randomType == 0)
         {
             mushroomType = MushroomType.Edible;
+            int random = Random.Range(0, edible.Count);
+            spriteRenderer.sprite = edible[random];
         } else {
             mushroomType = MushroomType.Poisonous;
+            int random = Random.Range(0, poisonous.Count);
+            spriteRenderer.sprite = poisonous[random];
         }
         hittable = true;
     }
