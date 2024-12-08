@@ -10,7 +10,7 @@ public class TimerScript : MonoBehaviour
     public TextMeshProUGUI timerText;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void StartTimer()
     {
         TimerOn = true;
     }
@@ -24,9 +24,7 @@ public class TimerScript : MonoBehaviour
             {
                 TimeLeft -= Time.deltaTime;
                 updateTimer(TimeLeft);
-            }
-            else
-            {
+            } else {
                 TimeLeft = 0;
                 TimerOn = false;
             }
