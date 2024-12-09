@@ -68,26 +68,22 @@ public class Mushroom : MonoBehaviour
     {
         print ("smashed");
         if (hittable) {
+            // Turn off hittable so that we can't keep tapping for score.
+            hittable = false;
             switch (mushroomType) {
             case MushroomType.Edible:
                 print ("edible");
                 ScoreManager.instance.ReducePoints();
-                StopAllCoroutines();
-                StartCoroutine(QuickHide());
-                // Turn off hittable so that we can't keep tapping for score.
-                hittable = false;
                 break;
             case MushroomType.Poisonous:
                 print ("poisonous");
                 ScoreManager.instance.AddPoint();
-                StopAllCoroutines();
-                StartCoroutine(QuickHide());
-                // Turn off hittable so that we can't keep tapping for score.
-                hittable = false;
                 break;
             default:
                 break;
             }
+            StopAllCoroutines();
+            StartCoroutine(QuickHide());
             controller.currentMushrooms.Remove(controller.mushrooms[mushroomIndex]);
         }
     }
