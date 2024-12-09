@@ -10,11 +10,8 @@ public class InputController : MonoBehaviour
     void Start()
     {
         sp = new SerialPort("COM3", 9600);
-        if (!sp.IsOpen)
-        {
-            sp.Open();
-            sp.ReadTimeout = 1;
-        }
+        sp.Open();
+        sp.ReadTimeout = 1;
     }
 
     // Update is called once per frame
