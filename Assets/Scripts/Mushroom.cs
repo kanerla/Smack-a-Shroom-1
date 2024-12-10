@@ -16,7 +16,7 @@ public class Mushroom : MonoBehaviour
 
     private SpriteRenderer spriteRenderer;
 
-    private bool hittable = true;
+    private bool hittable = false;
     public enum MushroomType { Edible, Poisonous };
     private MushroomType mushroomType;
     private int mushroomIndex = 0;
@@ -44,6 +44,7 @@ public class Mushroom : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        hittable = false;
         transform.localPosition = start;
         controller.currentMushrooms.Remove(controller.mushrooms[mushroomIndex]);
     }
@@ -55,7 +56,7 @@ public class Mushroom : MonoBehaviour
 
     private IEnumerator QuickHide()
     {
-        yield return new WaitForSeconds(0.25f);
+        yield return new WaitForSeconds(0.15f);
         // Whilst we were waiting we may have spawned again here, so just
         // check that hasn't happened before hiding it. This will stop it
         // flickering in that case.
@@ -66,17 +67,14 @@ public class Mushroom : MonoBehaviour
 
     public void Smashed()
     {
-        print ("smashed");
         if (hittable) {
             // Turn off hittable so that we can't keep tapping for score.
             hittable = false;
             switch (mushroomType) {
             case MushroomType.Edible:
-                print ("edible");
                 ScoreManager.instance.ReducePoints();
                 break;
             case MushroomType.Poisonous:
-                print ("poisonous");
                 ScoreManager.instance.AddPoint();
                 break;
             default:
