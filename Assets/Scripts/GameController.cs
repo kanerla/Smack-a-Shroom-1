@@ -23,7 +23,6 @@ public class GameController : MonoBehaviour
         TimerScript.instance.StartTimer();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (playing)

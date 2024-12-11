@@ -6,7 +6,6 @@ public class AudioScript : MonoBehaviour
     public AudioSource positiveAudio;
     public static AudioScript instance;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void PlayPositive()
     {
         positiveAudio.Play();

@@ -9,13 +9,11 @@ public class TimerScript : MonoBehaviour
     public bool TimerOn = false;
     public TextMeshProUGUI timerText;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     public void StartTimer()
     {
         TimerOn = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (TimerOn)
