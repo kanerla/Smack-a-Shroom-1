@@ -8,7 +8,6 @@ public class ScoreManager : MonoBehaviour
     public TextMeshProUGUI scoreText;
     private int score;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         score = 0;
@@ -29,7 +28,7 @@ public class ScoreManager : MonoBehaviour
 
     private void SetScore()
     {
-        scoreText.text = "Points: " + score.ToString();
+        scoreText.text = score.ToString();
         PlayerPrefs.SetInt("score", score);
     }
 
